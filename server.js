@@ -28,7 +28,7 @@ app.get("/video", async (req, res) => {
 
     try {
         console.log(`Fetching details for video ID: ${videoId}`);
-        const video = await yt.getVideo(videoId);  // getDetails -> getVideo に変更
+        const video = await yt.getDetails(videoId);  // getDetails に修正
         console.log(`Successfully fetched video details for ID: ${videoId}`);
 
         res.json(video);
