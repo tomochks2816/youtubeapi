@@ -19,8 +19,8 @@ app.get("/video", async (req, res) => {
     if (!videoId) return res.status(400).json({ error: "動画IDが必要です" });
 
     try {
-        const details = await yt.getDetails(videoId);
-        res.json(details);
+        const video = await yt.getVideo(videoId);  // getDetails -> getVideo に変更
+        res.json(video);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
