@@ -1,0 +1,16 @@
+{
+  "name": "my-youtube-api",
+  "version": "1.0.0",
+  "description": "A simple YouTube video info API using youtubei.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "youtubei.js": "^7.0.2"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
