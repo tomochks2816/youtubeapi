@@ -14,7 +14,7 @@ let yt;
         yt = await Innertube.create();
         console.log("YouTube API initialized successfully.");
     } catch (error) {
-        console.error("Error initializing YouTube API:", error.message);
+        console.error("Error initializing YouTube API:", error);
     }
 })();
 
@@ -26,15 +26,22 @@ app.get("/video", async (req, res) => {
         return res.status(400).json({ error: "動画IDが必要です" });
     }
 
+    if (!yt) {
+        console.error("YouTube API has not been initialized yet.");
+        return res.status(500).json({ error: "YouTube APIの初期化が完了していません。" });
+    }
+
     try {
         console.log(`Fetching details for video ID: ${videoId}`);
-        const video = await yt.getDetails(videoId);  // getDetails に修正
+        console.log("Available methods on yt:", Object.keys(yt));  // ytのメソッド一覧を出力
+
+        const video = await yt.getDetails(videoId);
         console.log(`Successfully fetched video details for ID: ${videoId}`);
 
         res.json(video);
     } catch (error) {
         console.error("Error fetching video details:", error.message);
-        console.error(error.stack);  // エラースタックを出力して、どこでエラーが発生したか追跡できるようにする
+        console.error(error.stack);  // エラースタックを出力
         res.status(500).json({ error: "動画情報の取得に失敗しました。" });
     }
 });
