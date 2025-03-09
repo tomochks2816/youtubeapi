@@ -9,11 +9,10 @@ app.use(cors());
 
 let yt;
 
-// YouTube API の初期化
+// ✅ `Innertube.create()` で初期化
 (async () => {
     try {
-        yt = new Innertube();  // create() ではなく new を使う
-        await yt.init();       // 初期化処理を追加
+        yt = await Innertube.create();  // new Innertube() はダメ
         console.log("✅ YouTube API initialized successfully.");
     } catch (error) {
         console.error("❌ Error initializing YouTube API:", error);
@@ -35,7 +34,7 @@ app.get("/video", async (req, res) => {
 
     try {
         console.log(`🎥 Fetching details for video ID: ${videoId}`);
-        const video = await yt.getDetails(videoId);  // getInfo() → getDetails() に変更
+        const video = await yt.getDetails(videoId);
         console.log(`✅ Successfully fetched video details for ID: ${videoId}`);
 
         res.json(video);
@@ -56,7 +55,7 @@ const startServer = (port) => {
         if (error.code === "EADDRINUSE") {
             console.error(`⚠️ Port ${port} is already in use. Trying another port...`);
             setTimeout(() => {
-                startServer(0); // 0 を指定すると OS が空いているポートを自動選択する
+                startServer(0); // OS に空いているポートを選ばせる
             }, 1000);
         } else {
             console.error("❌ Server error:", error);
