@@ -12,7 +12,8 @@ let yt;
 // YouTube API の初期化
 (async () => {
     try {
-        yt = await Innertube.create();
+        yt = new Innertube();  // create() ではなく new を使う
+        await yt.init();       // 初期化処理を追加
         console.log("✅ YouTube API initialized successfully.");
     } catch (error) {
         console.error("❌ Error initializing YouTube API:", error);
@@ -34,7 +35,7 @@ app.get("/video", async (req, res) => {
 
     try {
         console.log(`🎥 Fetching details for video ID: ${videoId}`);
-        const video = await yt.getInfo(videoId);
+        const video = await yt.getDetails(videoId);  // getInfo() → getDetails() に変更
         console.log(`✅ Successfully fetched video details for ID: ${videoId}`);
 
         res.json(video);
