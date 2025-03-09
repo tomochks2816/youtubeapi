@@ -42,20 +42,8 @@ app.get("/video", async (req, res) => {
     }
 });
 
-// ポート設定（使用中なら +1 する）
-const startServer = (port) => {
-    const server = app.listen(port, () => {
-        console.log(`🚀 Server is running on port ${port}`);
-    });
-
-    server.on("error", (err) => {
-        if (err.code === "EADDRINUSE") {
-            console.warn(`⚠️ Port ${port} is in use, trying port ${port + 1}...`);
-            startServer(port + 1);
-        } else {
-            console.error("❌ Server error:", err);
-        }
-    });
-};
-
-startServer(process.env.PORT || 3000);
+// ポート8080でサーバーを起動
+const PORT = 8080;
+app.listen(PORT, () => {
+    console.log(`🚀 Server is running on port ${PORT}`);
+});
